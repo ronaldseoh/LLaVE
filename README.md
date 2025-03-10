@@ -1,6 +1,6 @@
 # LLaVE: Large Language and Vision Embedding Models with Hardness-Weighted Contrastive Learning
 
-This repo contains the code and data for [LLaVE: Large Language and Vision Embedding Models with Hardness-Weighted Contrastive Learning](https://arxiv.org/abs/), We have developed a series of more powerful unified multimodal embedding models that can accept inputs combining text and images, and even video.
+This repo contains the code and data for [LLaVE: Large Language and Vision Embedding Models with Hardness-Weighted Contrastive Learning](https://arxiv.org/abs/2503.04812?context=cs.CV), We have developed a series of more powerful unified multimodal embedding models that can accept inputs combining text and images, and even video.
 
 
 <a target="_blank" href="https://arxiv.org/abs/">
