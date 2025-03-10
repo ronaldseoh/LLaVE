@@ -29,7 +29,7 @@ LLaVE-7B achieved the SOTA performance on MMEB using only 662K training pairs.
 ![MMEB](./figures/results.png)
 
 Although LLaVE is trained on image-text data, it can generalize to text-video retrieval tasks in a zero-shot manner and achieve strong performance, demonstrating its remarkable potential for transfer to other embedding tasks.
-<img src="./figures/zero-shot-vr.png" alt="video-retrieve" width="300" height="auto">
+<img src="./figures/zero-shot-vr.png" alt="video-retrieve" width="400" height="auto">
 
 ## Models & Scripts
 
