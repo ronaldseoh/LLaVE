@@ -18,6 +18,20 @@ This repo contains the code and data for [LLaVE: Large Language and Vision Embed
 
 - **[2025/03/10]** 🔥 We are excited to release **LLaVE-0.5B, LLaVE-2B, LLaVE-7B**. The paper, models, and inference code are now publicly available.
 
+## MMEB Leaderboard
+We achieved the top ranking on the MMEB leaderboard using only a small amount of data.
+
+![MMEB Leaderboard](./figures/leaderboard.png)
+
+
+## Model Performance
+LLaVE-7B achieved the SOTA performance on MMEB using only 662K training pairs.
+![MMEB](./figures/results.png)
+
+Although LLaVE is trained on image-text data, it can generalize to text-video retrieval tasks in a zero-shot manner and achieve strong performance, demonstrating its remarkable potential for transfer to other embedding tasks.
+![video-retrieval](./figures/zero-shot-vr.png)
+
+
 ## Models & Scripts
 
 
