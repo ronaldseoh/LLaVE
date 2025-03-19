@@ -124,8 +124,8 @@ PROMPT_VERSION="qwen_1_5"
 PREV_STAGE_CHECKPOINT=BAAI/Aquila-VL-2B-llava-qwen
 RUN_NAME="LLaVE-2B"
 torchrun --nproc_per_node=8 --master_port=20042 \
-    $prefix/LLaVA-NeXT/llava/train/train_mem.py \
-    --deepspeed $prefix/LLaVA-NeXT/scripts/zero3.json \
+    $prefix/LLaVE/llava/train/train_mem.py \
+    --deepspeed $prefix/LLaVE/scripts/zero3.json \
     --model_name_or_path $PREV_STAGE_CHECKPOINT \
     --version $PROMPT_VERSION \
     --data_path TIGER-Lab/MMEB-train \
@@ -188,7 +188,7 @@ Run the following script to eval.
 prefix="your code dir"
 PROMPT_VERSION="qwen_1_5"
 RUN_NAME="zhibinlan/LLaVE-2B"
-python3 $prefix/LLaVA-NeXT/llava/eval/model_embed.py \
+python3 $prefix/LLaVE/llava/eval/model_embed.py \
     --model_name_or_path $RUN_NAME \
     --version $PROMPT_VERSION \
     --dataset_name TIGER-Lab/MMEB-eval \
@@ -208,7 +208,7 @@ PROMPT_VERSION="qwen_1_5"
 RUN_NAME="zhibinlan/LLaVE-7B"
 
 python3 -m torch.distributed.launch --nproc_per_node=1 \
-    $prefix/LLaVA-NeXT/CLIP4Clip/main_task_retrieval.py \
+    $prefix/LLaVE/CLIP4Clip/main_task_retrieval.py \
     --model_name_or_path $prefix/checkpoints/$RUN_NAME \
     --version qwen_1_5 \
     --do_eval \
