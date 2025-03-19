@@ -45,7 +45,6 @@ cd LLaVE
 ```bash
 conda create -n llave python=3.10 -y
 conda activate llave
-cd llave
 pip install --upgrade pip  # Enable PEP 660 support.
 pip install -e ".[train]"
 ```
