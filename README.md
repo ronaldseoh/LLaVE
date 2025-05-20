@@ -15,8 +15,8 @@ This repo contains the code and data for [LLaVE: Large Language and Vision Embed
 <img style="height:22pt" src="https://img.shields.io/badge/-🤗%20LLaVE--7B-red?style=flat"></a>
 
 ## Release Notes
-
-- **[2025/03/10]** 🔥 We are excited to release **LLaVE-0.5B, LLaVE-2B, LLaVE-7B**. The paper, models, and inference code are now publicly available.
+- **[2025/05/20]** 🔥 We release the training code and scripts.
+- **[2025/03/10]** We are excited to release **LLaVE-0.5B, LLaVE-2B, LLaVE-7B**. The paper, models, and inference code are now publicly available.
 
 ## MMEB Leaderboard
 We achieved the top ranking on the MMEB leaderboard using only a small amount of data.
