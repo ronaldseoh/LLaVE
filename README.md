@@ -172,7 +172,84 @@ torchrun --nproc_per_node=8 --master_port=20042 \
     --lora_enable False \
     --alpha ${ALPHA}
   ``` -->
+## Training
 
+Download the image file zip from huggingface.
+```
+git lfs install
+git clone https://huggingface.co/datasets/TIGER-Lab/MMEB-train
+cd MMEB-train
+python unzip_file.py
+cd ../
+```
+
+Run the following script to train.
+```bash
+prefix="your code dir"
+VISION_MODEL_VERSION="google/siglip-so400m-patch14-384"
+ALPHA=9
+PROMPT_VERSION="qwen_1_5"
+PREV_STAGE_CHECKPOINT=BAAI/Aquila-VL-2B-llava-qwen
+RUN_NAME="LLaVE-2B"
+torchrun --nproc_per_node=8 --master_port=20042 \
+    $prefix/LLaVE/llava/train/train_mem.py \
+    --deepspeed $prefix/LLaVE/scripts/zero3.json \
+    --model_name_or_path $PREV_STAGE_CHECKPOINT \
+    --version $PROMPT_VERSION \
+    --data_path TIGER-Lab/MMEB-train \
+    --image_folder $prefix/MMEB-train \
+    --mm_tunable_parts="mm_mlp_adapter,mm_language_model" \
+    --mm_vision_tower_lr=2e-6 \
+    --vision_tower ${VISION_MODEL_VERSION} \
+    --mm_projector_type mlp2x_gelu \
+    --mm_vision_select_layer -2 \
+    --mm_use_im_start_end False \
+    --mm_use_im_patch_token False \
+    --group_by_modality_length True \
+    --image_aspect_ratio anyres_max_9 \
+    --image_grid_pinpoints  "(1x1),...,(2x2)" \
+    --mm_patch_merge_type spatial_unpad \
+    --bf16 True \
+    --run_name $RUN_NAME \
+    --output_dir $prefix/checkpoints/$RUN_NAME \
+    --num_train_epochs 1 \
+    --per_device_train_batch_size 4 \
+    --per_device_eval_batch_size 4 \
+    --gradient_accumulation_steps 8 \
+    --evaluation_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps 500 \
+    --save_total_limit 1 \
+    --learning_rate 1e-5 \
+    --weight_decay 0. \
+    --warmup_ratio 0.03 \
+    --lr_scheduler_type "cosine" \
+    --logging_steps 1 \
+    --tf32 True \
+    --model_max_length 4096 \
+    --gradient_checkpointing True \
+    --dataloader_num_workers 4 \
+    --lazy_preprocess True \
+    --report_to none \
+    --torch_compile True \
+    --torch_compile_backend "inductor" \
+    --dataloader_drop_last True \
+    --frames_upbound 32 \
+    --subset_name ImageNet_1K HatefulMemes SUN397 N24News VOC2007 OK-VQA A-OKVQA DocVQA InfographicsVQA ChartQA Visual7W VisDial CIRR NIGHTS WebQA VisualNews_i2t VisualNews_t2i MSCOCO_t2i MSCOCO_i2t MSCOCO \
+    --num_sample_per_subset 50000 \
+    --lora_enable False \
+    --alpha ${ALPHA}
+  ```
+
+## Custom Dataset
+The dataset should follow the structure of the dataset at [TIGER-Lab/MMEB-train](https://huggingface.co/datasets/TIGER-Lab/MMEB-train). Ensure that your JSON files contain the necessary fields as specified in the MMEB-train dataset.
+
+To load data from local JSON files, set the data_path to the directory containing your JSON files and subset_name to the name of the JSON file (without the .json extension).
+
+For example, if your JSON file is located at /example/path/custom.json:
+
+1. Set data_path to /example/path
+2. Set subset_name to custom
 
 ## MMEB Inference & Evaluation
 

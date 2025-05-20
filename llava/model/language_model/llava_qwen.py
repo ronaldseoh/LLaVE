@@ -30,6 +30,7 @@ from llava.model.llava_arch import LlavaMetaModel, LlavaMetaForCausalLM
 from transformers import Qwen2Config, Qwen2Model, Qwen2ForCausalLM
 from llava.utils import rank0_print
 
+from .loss import WeightedClipLoss
 import numpy as np
 import deepspeed
 # from .qwen.modeling_qwen import QWenLMHeadModel, QWenModel
@@ -118,6 +119,34 @@ class LlavaQwenForCausalLM(Qwen2ForCausalLM, LlavaMetaForCausalLM):
 
         #
         return pooled_output
+
+    def forward(
+        self,
+        qry_inputs: dict = None,
+        pos_inputs: dict = None,
+        # adapt LLM input
+        input_ids: torch.LongTensor = None,
+        attention_mask: Optional[torch.Tensor] = None,
+        position_ids: Optional[torch.LongTensor] = None,
+        past_key_values: Optional[List[torch.FloatTensor]] = None,
+        inputs_embeds: Optional[torch.FloatTensor] = None,
+        labels: Optional[torch.LongTensor] = None,
+        use_cache: Optional[bool] = None,
+        output_attentions: Optional[bool] = None,
+        output_hidden_states: Optional[bool] = None,
+        return_dict: Optional[bool] = None,
+    ) -> Union[Tuple, CausalLMOutputWithPast]:
+        qry_inputs["use_cache"] = None
+        pos_inputs["use_cache"] = None
+        qry_inputs["output_attentions"] = None
+        pos_inputs["output_attentions"] = None
+
+        qry_embeddings = self.encode_multimodal_embeddings(**qry_inputs)
+        pos_embeddings = self.encode_multimodal_embeddings(**pos_inputs)
+
+        loss_fct = WeightedClipLoss(local_loss=True, gather_with_grad=True, rank=torch.distributed.get_rank(group=None), world_size=torch.distributed.get_world_size(group=None))
+        loss = loss_fct(qry_embeddings, pos_embeddings, logit_scale=self.model.config.logit_scale, alpha=self.model.config.alpha)
+        return {"loss": loss}
 
     @torch.no_grad()
     def generate(
