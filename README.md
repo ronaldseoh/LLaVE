@@ -241,7 +241,7 @@ torchrun --nproc_per_node=8 --master_port=20042 \
     --alpha ${ALPHA}
   ```
 
-## Custom Dataset
+### Custom Dataset
 The dataset should follow the structure of the dataset at [TIGER-Lab/MMEB-train](https://huggingface.co/datasets/TIGER-Lab/MMEB-train). Ensure that your JSON files contain the necessary fields as specified in the MMEB-train dataset.
 
 To load data from local JSON files, set the data_path to the directory containing your JSON files and subset_name to the name of the JSON file (without the .json extension).
