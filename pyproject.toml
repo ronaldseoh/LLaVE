@@ -40,7 +40,7 @@ train = [
     "wandb",
     "deepspeed==0.14.4",
     "peft==0.4.0",
-    "accelerate=0.29.3",
+    "accelerate==0.29.3",
     "tokenizers~=0.15.2",
     "transformers==4.39.3",
     "bitsandbytes==0.41.0",
