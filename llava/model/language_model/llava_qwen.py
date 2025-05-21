@@ -20,7 +20,7 @@ import torch.nn.functional as F
 from torch.nn import CrossEntropyLoss
 
 import transformers
-from transformers import AutoConfig, AutoModelForCausalLM, LlamaConfig, LlamaModel, LlamaForCausalLM
+from transformers import AutoConfig, AutoModelForCausalLM, LlamaConfig, LlamaModel, LlamaForCausalLM, PretrainedConfig
 
 from transformers.modeling_outputs import CausalLMOutputWithPast
 from transformers.generation.utils import GenerateOutput
@@ -53,7 +53,7 @@ class LlavaQwenForCausalLM(Qwen2ForCausalLM, LlavaMetaForCausalLM):
 
     def __init__(self, config):
         # super(Qwen2ForCausalLM, self).__init__(config)
-        Qwen2ForCausalLM.__init__(self, config)
+        Qwen2ForCausalLM.__init__(self, transformers.PretrainedConfig.from_dict(config))
         config.model_type = "llava_qwen"
         config.rope_scaling = None
 
