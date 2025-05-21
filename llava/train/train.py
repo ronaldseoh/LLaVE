@@ -138,7 +138,7 @@ class DataArguments:
     ## LLaVE parameters
     subset_name: List[str] = field(default=None, metadata={"help": "Useful for datasets with subsets"})
     num_sample_per_subset: int = field(default=100000)
-    dataset_split: str = field(default='train', metadata={"help": "dataset split"})
+    dataset_split: str = field(default='original', metadata={"help": "dataset split"})
 
 @dataclass
 class TrainingArguments(transformers.TrainingArguments):
