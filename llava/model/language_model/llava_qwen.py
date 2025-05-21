@@ -32,7 +32,7 @@ from llava.utils import rank0_print
 
 from .loss import WeightedClipLoss
 import numpy as np
-import deepspeed
+# import deepspeed
 # from .qwen.modeling_qwen import QWenLMHeadModel, QWenModel
 # from .qwen.configuration_qwen import QWenConfig
 
