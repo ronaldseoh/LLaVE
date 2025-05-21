@@ -53,7 +53,7 @@ class LlavaMetaModel:
             vision_tower = vision_tower[0]
         return vision_tower
 
-    def initialize_vision_modules(self, model_args, fsdp=None):
+    def initialize_vision_modules(self, model_args, fsdp=None, cache_dir=None):
         vision_tower = model_args.vision_tower
         mm_vision_select_layer = model_args.mm_vision_select_layer
         mm_vision_select_feature = model_args.mm_vision_select_feature
@@ -82,7 +82,7 @@ class LlavaMetaModel:
             else:
                 vision_resampler = self.vision_resampler
                 vision_tower = self.vision_tower
-            vision_tower.load_model()
+            vision_tower.load_model(cache_dir=cache_dir)
 
             # In case it is frozen by LoRA
             for p in self.vision_resampler.parameters():
